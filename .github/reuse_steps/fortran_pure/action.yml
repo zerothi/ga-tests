@@ -9,9 +9,10 @@ runs:
   - name: Intrinsic build
     shell: bash
     run: |
+      cd fortran/pure
+
       # Just to be sure it is the same as prior steps
       echo FC=$FC
-      cd fortran/pure
       opts=(
         --log-level=debug
         --log-context
@@ -28,6 +29,8 @@ runs:
   - name: Crosscompile for arm64
     shell: bash
     run: |
+      cd fortran/pure
+
       [ $(uname -m) == "aarch64*" ] && exit 0
       [ $(uname -m) == "arm*" ] && exit 0
       if [[ $(uname) == "Darwin" ]]; then

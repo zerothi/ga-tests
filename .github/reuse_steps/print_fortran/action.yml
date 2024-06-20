@@ -13,6 +13,7 @@ runs:
         ifx
         lfortran
         nvfortran
+        f95
       )
       for v in ${names[@]} ; do
         exe=$(which $v)
