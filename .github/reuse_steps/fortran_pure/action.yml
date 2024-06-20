@@ -1,5 +1,11 @@
 name: Build and test fortran/pure
 
+inputs:
+  arm:  # id of input
+    description: 'Also build for arm64, if not native?'
+    required: false
+    default: 'false'
+
 runs:
   using: "composite"
   steps:
@@ -39,6 +45,13 @@ runs:
       cd fortran/pure
       obj=obj_arm64
 
+      # Just to be sure it is the same as prior steps
+      echo FC=$FC
+      if [ -z "$FC" ]; then
+        echo "Ensuring FC=gfortran..."
+        export FC=gfortran
+      fi
+
       opts=(
         --log-level=debug
         --log-context
@@ -75,3 +88,4 @@ runs:
       # We can't test, check it fails when running
       cd $obj
       ./pure.x && exit 1 || exit 0
+    if: ${{ inputs.arm == 'true' }}
