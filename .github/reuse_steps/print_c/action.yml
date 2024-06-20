@@ -1,0 +1,27 @@
+name: C compiler info
+
+runs:
+  using: "composite"
+  steps:
+  - shell: bash
+    run: |
+      # unset options -e
+      set +e
+      echo cc=$(which cc)
+      echo gcc=$(which gcc)
+      echo clang=$(which clang)
+      echo icc=$(which icc)
+      echo nvcc=$(which nvcc)
+      exit 0
+
+  - shell: bash
+    run: |
+      echo CC=$CC
+      echo CFLAGS=$CFLAGS
+
+  - shell: bash
+    run: |
+      echo "Other found gcc in same binary dir:"
+      find $(dirname $CC) -name "gcc*"
+      echo "Other found clang in same binary dir:"
+      find $(dirname $CC) -name "clang*"

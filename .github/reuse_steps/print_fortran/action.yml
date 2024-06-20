@@ -6,21 +6,22 @@ runs:
   steps:
   - shell: bash
     run: |
-      echo $(which gfortran)
+      set +e
+      echo gfortran=$(which gfortran)
+      echo ifort=$(which ifort)
+      echo ifx=$(which ifx)
+      echo lfortran=$(which lfortran)
+      echo nvfortran=$(which nvfortran)
       exit 0
+
   - shell: bash
     run: |
-      echo $(which ifort)
-      exit 0
+      echo FC=$FC
+      echo FFLAGS=$FFLAGS
+
   - shell: bash
     run: |
-      echo $(which ifx)
-      exit 0
-  - shell: bash
-    run: |
-      echo $(which lfortran)
-      exit 0
-  - shell: bash
-    run: |
-      echo $(which nvfortran)
-      exit 0
+      echo "Other found gfortran in same binary dir:"
+      find $(dirname $FC) -name "gfortran*"
+      echo "Other found flang in same binary dir:"
+      find $(dirname $FC) -name "flang*"

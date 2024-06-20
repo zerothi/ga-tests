@@ -1,0 +1,7 @@
+name: Compiler info
+
+runs:
+  using: "composite"
+  steps:
+  - uses: ./.github/reuse_steps/print_c
+  - uses: ./.github/reuse_steps/print_fortran
