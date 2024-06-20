@@ -1,0 +1,16 @@
+name: Print fortran info
+
+on:
+  workflow_call:
+
+jobs:
+  triage:
+    steps:
+    - name: Printing information:
+      run: |
+        echo $(which gfortran)
+        echo $(which ifort)
+        echo $(which ifx)
+        echo $(which lfortran)
+        echo $(which nvfortran)
+
