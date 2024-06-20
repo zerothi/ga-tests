@@ -32,6 +32,8 @@ runs:
     run: |
       # unset options -e
       set +e
+      # CC defined? Quick escape if that is the case...
+      [ -z "$CC" ] && exit 0
       DIR=$(dirname $(which $CC))
       echo "Other found gcc in same binary dir:"
       find $DIR -name "*gcc*"

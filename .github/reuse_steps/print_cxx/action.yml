@@ -23,6 +23,8 @@ runs:
     run: |
       # unset options -e
       set +e
+      # CXX defined? Quick escape if that is the case...
+      [ -z "$CXX" ] && exit 0
       DIR=$(dirname $(which $CXX))
       echo "Other found g++ in same binary dir:"
       find $DIR -name "g++*"
