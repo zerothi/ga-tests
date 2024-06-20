@@ -22,7 +22,7 @@ contains
       do i = 1 , N
          do j = 1 , M
             do l = 1 , K
-               C(l, j) = A(i, j) * B(j, l)
+               C(l, j) = C(l, j) + A(i, j) * B(j, l)
             end do
          end do
       end do
@@ -30,4 +30,3 @@ contains
    end subroutine
 
 end module
-

@@ -1,4 +1,4 @@
-name: Build and test fortran/pure
+name: Build and test c/pure
 
 inputs:
   arm:  # id of input
@@ -15,14 +15,14 @@ runs:
   - name: Intrinsic build
     shell: bash
     run: |
-      cd fortran/pure
+      cd c/pure
       obj=obj_host
 
       # Just to be sure it is the same as prior steps
-      echo FC=$FC
-      if [ -z "$FC" ]; then
-        echo "Ensuring FC=gfortran..."
-        export FC=gfortran
+      echo CC=$CC
+      if [ -z "$CC" ]; then
+        echo "Ensuring CC=gcc..."
+        export CC=gcc
       fi
 
       opts=(
@@ -43,14 +43,14 @@ runs:
   - name: Crosscompile for arm64
     shell: bash
     run: |
-      cd fortran/pure
+      cd c/pure
       obj=obj_arm64
 
       # Just to be sure it is the same as prior steps
-      echo FC=$FC
-      if [ -z "$FC" ]; then
-        echo "Ensuring FC=gfortran..."
-        export FC=gfortran
+      echo CC=$CC
+      if [ -z "$CC" ]; then
+        echo "Ensuring CC=gcc..."
+        export CC=gcc
       fi
 
       opts=(

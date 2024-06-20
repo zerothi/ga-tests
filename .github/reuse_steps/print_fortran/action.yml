@@ -32,6 +32,8 @@ runs:
     run: |
       # unset options -e
       set +e
+      # FC defined? Quick escape if that is the case...
+      [ -z "$FC" ] && exit 0
       DIR=$(dirname $(which $FC))
       echo "Other found gfortran in same binary dir:"
       find $DIR -name "*gfortran*"
