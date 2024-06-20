@@ -18,7 +18,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: ./.github/reuse_steps/print_compiler
+      - uses: ./.github/reuse_steps/print_host
       - uses: ./.github/reuse_steps/fortran_pure
 
   setup_fortran:
@@ -45,5 +45,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: ./.github/reuse_steps/print_compiler
+      - uses: ./.github/reuse_steps/print_host
       - uses: ./.github/reuse_steps/fortran_pure

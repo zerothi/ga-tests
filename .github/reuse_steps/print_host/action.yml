@@ -1,0 +1,11 @@
+name: Host info
+
+runs:
+  using: "composite"
+  steps:
+  - shell: bash
+    run: |
+      # unset options -e
+      set +e
+      uname -a
+      env

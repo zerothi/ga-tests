@@ -17,7 +17,7 @@ runs:
       )
       for v in ${names[@]} ; do
         exe=$(which $v)
-        printf '%-10s : %s' $v $exe
+        printf '%-10s : %s\n' $v $exe
         if [ -e "$exe" ]; then
           echo "  --version: $($exe --version)"
         fi

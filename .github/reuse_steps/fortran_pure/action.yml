@@ -4,9 +4,13 @@ runs:
   using: "composite"
   steps:
 
-  - name: Build
+  - uses: ./.github/reuse_steps/print_compiler
+
+  - name: Intrinsic build
     shell: bash
     run: |
+      # Just to be sure it is the same as prior steps
+      echo FC=$FC
       cd fortran/pure
       opts=(
         --log-level=debug
@@ -17,8 +21,33 @@ runs:
       cmake ${opts[@]} -S. -Bobj
       cmake --build obj
 
-  - name: Test
+      # And test
+      cd obj
+      ./pure.x
+
+  - name: Crosscompile for arm64
     shell: bash
     run: |
-      cd fortran/pure/obj
-      ./pure.x
+      [ $(uname -m) == "aarch64*"] && exit 0
+      [ $(uname -m) == "arm*"] && exit 0
+      if [[ $(uname) == "Darwin" ]]; then
+        processor=arm64
+      elif [[ $(uname) == "Linux" ]]; then
+        processor=aarch64
+      else
+        processor=arm64
+      fi
+      opts=(
+        --log-level=debug
+        --log-context
+        -DCMAKE_RULE_MESSAGES:BOOL=OFF
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
+        -DCMAKE_CROSSCOMPILING=1
+        -DCMAKE_SYSTEM_NAME=Generic
+        -DCMAKE_SYSTEM_PROCESSOR=$processor
+      )
+      cmake ${opts[@]} -S. -Bobj
+      cmake --build obj
+
+      # We can't test
