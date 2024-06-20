@@ -19,11 +19,11 @@ runs:
         -DCMAKE_RULE_MESSAGES:BOOL=OFF
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
-      cmake ${opts[@]} -S. -Bobj
-      cmake --build obj
+      cmake ${opts[@]} -S. -Bobj_host
+      cmake --build obj_host
 
       # And test
-      cd obj
+      cd obj_host
       ./pure.x
 
   - name: Crosscompile for arm64
@@ -50,7 +50,7 @@ runs:
         -DCMAKE_SYSTEM_NAME=Generic
         -DCMAKE_SYSTEM_PROCESSOR=$processor
       )
-      cmake ${opts[@]} -S. -Bobj
-      cmake --build obj
+      cmake ${opts[@]} -S. -Bobj_arm64
+      cmake --build obj_arm64
 
       # We can't test
