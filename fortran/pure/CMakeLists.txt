@@ -1,5 +1,16 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
+# Check we don't build in the top-level dir
+get_filename_component(_srcdir "${CMAKE_CURRENT_SOURCE_DIR}" REALPATH)
+get_filename_component(_bindir "${CMAKE_CURRENT_BINARY_DIR}" REALPATH)
+
+if("${_srcdir}" STREQUAL "${_bindir}")
+  message(FATAL_ERROR
+    "It is not allowed to configure and build this project from its source folder. Please, create a \
+separate build directory and invoke CMake from that directory.")
+endif()
+
+
 list(APPEND CMAKE_MESSAGE_CONTEXT pure)
 
 project(pure
@@ -10,6 +21,7 @@ project(pure
 # Follow GNU conventions for installing directories
 # This will use the bin/ include/ etc. folder structure
 include(GNUInstallDirs)
+
 
 
 # Define options for this project
@@ -78,4 +90,3 @@ if( PURE_INSTALL )
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
 endif()
-
