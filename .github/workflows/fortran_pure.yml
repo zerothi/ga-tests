@@ -18,6 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - uses: ./.github/reuse_steps/print_fortran
+      - uses: ./.github/reuse_steps/fortran_pure
+
   setup_fortran:
     name: setup_fortran
     runs-on: ${{ matrix.os }}
@@ -42,30 +45,5 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Printing information
-        shell: bash
-        run: |
-          echo $(which gfortran)
-          echo $(which ifort)
-          echo $(which ifx)
-          echo $(which lfortran)
-          echo $(which nvfortran)
-          exit 0
-
-      - name: Build
-        id: build
-        run: |
-          cd fortran/pure
-          opts=(
-            --log-level=debug
-            --log-context
-            -DCMAKE_RULE_MESSAGES:BOOL=OFF
-            -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-          )
-          cmake ${opts[@]} -S. -Bobj
-          cmake --build obj
-
-      - name: Test
-        run: |
-          cd obj
-          ./pure.x
+      - uses: ./.github/reuse_steps/print_fortran
+      - uses: ./.github/reuse_steps/fortran_pure

@@ -2,6 +2,7 @@ name: Print fortran info
 description: Simple showcasing variables
 
 runs:
+  using: "composite"
   steps:
   - name: Printing information
     shell: bash

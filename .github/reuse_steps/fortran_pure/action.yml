@@ -1,0 +1,22 @@
+name: Build and test fortran/pure
+
+runs:
+  using: "composite"
+  steps:
+
+  - name: Build
+    run: |
+      cd fortran/pure
+      opts=(
+        --log-level=debug
+        --log-context
+        -DCMAKE_RULE_MESSAGES:BOOL=OFF
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+      )
+      cmake ${opts[@]} -S. -Bobj
+      cmake --build obj
+
+  - name: Test
+    run: |
+      cd fortran/pure/obj
+      ./pure.x
