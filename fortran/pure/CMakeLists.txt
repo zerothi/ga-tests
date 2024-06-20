@@ -21,19 +21,16 @@ project(pure
 # Follow GNU conventions for installing directories
 # This will use the bin/ include/ etc. folder structure
 include(GNUInstallDirs)
-
+include(CMakePrintHelpers)
 
 
 # Define options for this project
 option(BUILD_SHARED_LIBS "Build using shared libraries" FALSE)
-option(PURE_SHARED_LIBS "Build as a shared library" "${BUILD_SHARED_LIBS}")
-if( PURE_SHARED_LIBS )
+if( BUILD_SHARED_LIBS )
   include(CheckPIESupported)
   check_pie_supported()
 
   message(STATUS "Enabling position independent code")
-  # Ensure BUILD_SHARED_LIBS is set
-  set(BUILD_SHARED_LIBS ON CACHE BOOL "Building shared libs" FORCE)
 elseif( BUILD_SHARED_LIBS )
   set(BUILD_SHARED_LIBS OFF CACHE BOOL "Building shared libs" FORCE)
 endif()
@@ -41,6 +38,18 @@ endif()
 
 option(PURE_WITH_BLAS "Enable code with BLAS calls" FALSE)
 option(PURE_INSTALL "Enable install calls" ${PROJECT_IS_TOP_LEVEL})
+
+
+# Print options
+cmake_print_variables(PROJECT_NAME)
+cmake_print_variables(BUILD_SHARED_LIBS)
+cmake_print_variables(PURE_WITH_BLAS)
+cmake_print_variables(PURE_INSTALL)
+cmake_print_variables(CMAKE_CROSSCOMPILING)
+cmake_print_variables(CMAKE_HOST_SYSTEM_NAME)
+cmake_print_variables(CMAKE_SYSTEM_NAME)
+cmake_print_variables(CMAKE_HOST_SYSTEM_PROCESSOR)
+cmake_print_variables(CMAKE_SYSTEM_PROCESSOR)
 
 
 if( PURE_WITH_BLAS )
@@ -90,3 +99,5 @@ if( PURE_INSTALL )
     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
     )
 endif()
+
+list(POP_FRONT CMAKE_MESSAGE_CONTEXT)

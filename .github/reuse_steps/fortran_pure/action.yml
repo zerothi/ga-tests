@@ -30,27 +30,36 @@ runs:
     shell: bash
     run: |
       cd fortran/pure
-
-      [ $(uname -m) == "aarch64*" ] && exit 0
-      [ $(uname -m) == "arm*" ] && exit 0
-      if [[ $(uname) == "Darwin" ]]; then
-        processor=arm64
-      elif [[ $(uname) == "Linux" ]]; then
-        processor=aarch64
-      else
-        processor=arm64
-      fi
       opts=(
         --log-level=debug
         --log-context
         -DCMAKE_RULE_MESSAGES:BOOL=OFF
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+      )
 
-        -DCMAKE_CROSSCOMPILING=1
-        -DCMAKE_SYSTEM_NAME=Generic
+      [ $(uname -m) == "aarch64*" ] && exit 0
+      [ $(uname -m) == "arm*" ] && exit 0
+      if [[ $(uname) == "Darwin" ]]; then
+        system_name=Darwin
+        processor=arm64
+        opts=(${opts[@]}
+          -DCMAKE_OSX_ARCHITECHTURES=arm64
+        )
+      elif [[ $(uname) == "Linux" ]]; then
+        system_name=Linux
+        processor=aarch64
+      else
+        system_name=Windows
+        processor=arm64
+      fi
+      opts=(${opts[@]}
+
+        -DCMAKE_SYSTEM_NAME=$system_name
         -DCMAKE_SYSTEM_PROCESSOR=$processor
       )
       cmake ${opts[@]} -S. -Bobj_arm64
       cmake --build obj_arm64
 
       # We can't test
+      cd obj_arm64
+      ./pure.x && exit 1 || exit 0
