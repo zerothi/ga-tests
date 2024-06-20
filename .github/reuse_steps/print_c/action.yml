@@ -7,12 +7,21 @@ runs:
     run: |
       # unset options -e
       set +e
-      echo cc=$(which cc)
-      echo gcc=$(which gcc)
-      echo clang=$(which clang)
-      echo icc=$(which icc)
-      echo nvcc=$(which nvcc)
-      exit 0
+      names=(
+        gcc
+        clang
+        icc
+        icx
+        nvc
+        cc
+      )
+      for v in ${names[@]} ; do
+        exe=$(which $v)
+        printf '%-10s : %s' $v $exe
+        if [ -e "$exe" ]; then
+          echo "  --version: $($exe --version)"
+        fi
+      done
 
   - shell: bash
     run: |
@@ -21,7 +30,10 @@ runs:
 
   - shell: bash
     run: |
+      # unset options -e
+      set +e
+      DIR=$(dirname $(which $CC))
       echo "Other found gcc in same binary dir:"
-      find $(dirname $CC) -name "gcc*"
+      find $DIR -name "gcc*"
       echo "Other found clang in same binary dir:"
-      find $(dirname $CC) -name "clang*"
+      find $DIR -name "clang*"

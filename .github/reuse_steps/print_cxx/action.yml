@@ -1,0 +1,30 @@
+name: C++ compiler info
+
+runs:
+  using: "composite"
+  steps:
+  - shell: bash
+    run: |
+      # unset options -e
+      set +e
+      echo g++     = $(which g++)
+      echo clang++ = $(which clang++)
+      echo icpc    = $(which icpc)
+      echo icpx    = $(which icpx)
+      echo nvc++   = $(which nvc++)
+      echo cxx     = $(which cxx)
+
+  - shell: bash
+    run: |
+      echo CXX=$CXX
+      echo CXXFLAGS=$CXXFLAGS
+
+  - shell: bash
+    run: |
+      # unset options -e
+      set +e
+      DIR=$(dirname $(which $CXX))
+      echo "Other found g++ in same binary dir:"
+      find $DIR -name "g++*"
+      echo "Other found clang++ in same binary dir:"
+      find $DIR -name "clang++*"

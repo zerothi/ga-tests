@@ -7,12 +7,20 @@ runs:
   - shell: bash
     run: |
       set +e
-      echo gfortran=$(which gfortran)
-      echo ifort=$(which ifort)
-      echo ifx=$(which ifx)
-      echo lfortran=$(which lfortran)
-      echo nvfortran=$(which nvfortran)
-      exit 0
+      names=(
+        gfortran
+        ifort
+        ifx
+        lfortran
+        nvfortran
+      )
+      for v in ${names[@]} ; do
+        exe=$(which $v)
+        printf '%-10s : %s' $v $exe
+        if [ -e "$exe" ]; then
+          echo "  --version: $($exe --version)"
+        fi
+      done
 
   - shell: bash
     run: |
@@ -21,7 +29,10 @@ runs:
 
   - shell: bash
     run: |
+      # unset options -e
+      set +e
+      DIR=$(dirname $(which $FC))
       echo "Other found gfortran in same binary dir:"
-      find $(dirname $FC) -name "gfortran*"
+      find $DIR -name "gfortran*"
       echo "Other found flang in same binary dir:"
-      find $(dirname $FC) -name "flang*"
+      find $DIR -name "flang*"
