@@ -34,6 +34,6 @@ runs:
       set +e
       DIR=$(dirname $(which $FC))
       echo "Other found gfortran in same binary dir:"
-      find $DIR -name "gfortran*"
+      find $DIR -name "*gfortran*"
       echo "Other found flang in same binary dir:"
-      find $DIR -name "flang*"
+      find $DIR -name "*flang*"

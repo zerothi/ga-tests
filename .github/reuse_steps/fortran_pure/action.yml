@@ -10,26 +10,35 @@ runs:
     shell: bash
     run: |
       cd fortran/pure
+      obj=obj_host
 
       # Just to be sure it is the same as prior steps
       echo FC=$FC
+      if [ -z "$FC" ]; then
+        echo "Ensuring FC=gfortran..."
+        export FC=gfortran
+      fi
       opts=(
         --log-level=debug
         --log-context
         -DCMAKE_RULE_MESSAGES:BOOL=OFF
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
-      cmake ${opts[@]} -S. -Bobj_host
-      cmake --build obj_host
+      cmake ${opts[@]} -S. -B$obj
+      cmake --build $obj
 
       # And test
-      cd obj_host
+      cd $obj
       ./pure.x
 
+  # Inspired by:
+  # https://github.com/vpetrigo/arm-cmake-toolchains/blob/master/arm-gcc-toolchain.cmake
   - name: Crosscompile for arm64
     shell: bash
     run: |
       cd fortran/pure
+      obj=obj_arm64
+
       opts=(
         --log-level=debug
         --log-context
@@ -37,29 +46,32 @@ runs:
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
 
+      # Apparently forcing the generic
       [ $(uname -m) == "aarch64*" ] && exit 0
       [ $(uname -m) == "arm*" ] && exit 0
       if [[ $(uname) == "Darwin" ]]; then
         system_name=Darwin
-        processor=arm64
+        processor=ARM
         opts=(${opts[@]}
           -DCMAKE_OSX_ARCHITECHTURES=arm64
         )
       elif [[ $(uname) == "Linux" ]]; then
         system_name=Linux
-        processor=aarch64
+        processor=ARM
       else
         system_name=Windows
-        processor=arm64
+        processor=ARM
       fi
+      system_name=Generic
+
       opts=(${opts[@]}
 
         -DCMAKE_SYSTEM_NAME=$system_name
         -DCMAKE_SYSTEM_PROCESSOR=$processor
       )
-      cmake ${opts[@]} -S. -Bobj_arm64
-      cmake --build obj_arm64
+      cmake ${opts[@]} -S. -B$obj
+      cmake --build $obj
 
-      # We can't test
-      cd obj_arm64
+      # We can't test, check it fails when running
+      cd $obj
       ./pure.x && exit 1 || exit 0

@@ -34,6 +34,6 @@ runs:
       set +e
       DIR=$(dirname $(which $CC))
       echo "Other found gcc in same binary dir:"
-      find $DIR -name "gcc*"
+      find $DIR -name "*gcc*"
       echo "Other found clang in same binary dir:"
-      find $DIR -name "clang*"
+      find $DIR -name "*clang*"
