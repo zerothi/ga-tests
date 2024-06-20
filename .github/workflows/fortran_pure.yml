@@ -27,22 +27,21 @@ jobs:
           version: ${{ matrix.toolchain.version }}
 
       - uses: ./.github/reusables/fortran.yml
-        depends: [setup-fortran]
-      
+        needs: [setup-fortran]
+
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Build
         id: build
-        depends: [setup-fortran]
+        needs: [setup-fortran]
         run: |
           cd fortran/pure
           cmake --log-level=debug --log-context -Bobj -S.
           cmake --log-level=debug --log-context --build obj
-      
+
       - name: Test
-        depends: [build]
+        needs: [build]
         run: |
           cd obj
           ./pure.x
-
