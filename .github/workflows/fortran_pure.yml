@@ -6,7 +6,7 @@ on:
 
 jobs:
   setup_fortran:
-    name: Use setup_fortran for compiling
+    name: setup_fortran
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false

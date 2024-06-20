@@ -1,16 +1,14 @@
 name: Print fortran info
+description: Simple showcasing variables
 
-on:
-  workflow_call:
-
-jobs:
-  triage:
-    steps:
-    - name: Printing information:
-      run: |
-        echo $(which gfortran)
-        echo $(which ifort)
-        echo $(which ifx)
-        echo $(which lfortran)
-        echo $(which nvfortran)
-
+runs:
+  steps:
+  - name: Printing information
+    shell: bash
+    run: |
+      echo $(which gfortran)
+      echo $(which ifort)
+      echo $(which ifx)
+      echo $(which lfortran)
+      echo $(which nvfortran)
+      exit 0
