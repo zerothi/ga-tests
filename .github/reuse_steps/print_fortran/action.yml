@@ -4,12 +4,23 @@ description: Simple showcasing variables
 runs:
   using: "composite"
   steps:
-  - name: Printing information
-    shell: bash
+  - shell: bash
     run: |
       echo $(which gfortran)
+      exit 0
+  - shell: bash
+    run: |
       echo $(which ifort)
+      exit 0
+  - shell: bash
+    run: |
       echo $(which ifx)
+      exit 0
+  - shell: bash
+    run: |
       echo $(which lfortran)
+      exit 0
+  - shell: bash
+    run: |
       echo $(which nvfortran)
       exit 0

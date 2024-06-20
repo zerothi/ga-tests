@@ -5,6 +5,7 @@ runs:
   steps:
 
   - name: Build
+    shell: bash
     run: |
       cd fortran/pure
       opts=(
@@ -17,6 +18,7 @@ runs:
       cmake --build obj
 
   - name: Test
+    shell: bash
     run: |
       cd fortran/pure/obj
       ./pure.x
