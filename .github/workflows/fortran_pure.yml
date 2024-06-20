@@ -26,10 +26,10 @@ jobs:
           compiler: ${{ matrix.toolchain.compiler }}
           version: ${{ matrix.toolchain.version }}
 
-      - uses: ./.github/reusables/fortran.yml
-
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - uses: ./.github/reusables/fortran.yml
 
       - name: Build
         id: build
