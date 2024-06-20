@@ -29,7 +29,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: ./.github/reusables/fortran.yml
+      - name: Printing information
+        shell: bash
+        run: |
+          echo $(which gfortran)
+          echo $(which ifort)
+          echo $(which ifx)
+          echo $(which lfortran)
+          echo $(which nvfortran)
+          exit 0
 
       - name: Build
         id: build
