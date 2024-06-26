@@ -39,7 +39,9 @@ runs:
           '-G "MinGW Makefiles"'
         )
       fi
-      cmake ${opts[@]} -S. -B$obj
+      echo "CMake invocation:"
+      echo " cmake ${opts[@]} -S. B$obj"
+      cmake "${opts[@]}" -S. -B$obj
       cmake --build $obj
 
       # And test
@@ -90,7 +92,9 @@ runs:
         -DCMAKE_SYSTEM_NAME=$system_name
         -DCMAKE_SYSTEM_PROCESSOR=$processor
       )
-      cmake ${opts[@]} -S. -B$obj
+      echo "CMake invocation:"
+      echo " cmake ${opts[@]} -S. B$obj"
+      cmake "${opts[@]}" -S. -B$obj
       cmake --build $obj
 
       # We can't test, check it fails when running
