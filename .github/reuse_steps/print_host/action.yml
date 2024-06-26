@@ -34,4 +34,4 @@ runs:
         echo "processor=arm" >> $GITHUB_OUTPUT
       else
         echo "processor=x86_64" >> $GITHUB_OUTPUT
-      if
+      fi
