@@ -12,9 +12,9 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macos-12, macos-latest, windows-latest]
-      exclude:
-        # Neither of these has gfortran by default
-        os: [macos-12, macos-latest, windows-latest]
+        exclude:
+          # Neither of these has gfortran by default
+          - os: [macos-12, macos-latest, windows-latest]
 
     steps:
 
