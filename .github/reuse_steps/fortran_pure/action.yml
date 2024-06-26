@@ -10,6 +10,8 @@ runs:
   using: "composite"
   steps:
 
+  - id: host
+    uses: ./.github/reuse_steps/print_host
   - uses: ./.github/reuse_steps/print_compiler
 
   - name: Intrinsic build
@@ -31,6 +33,12 @@ runs:
         -DCMAKE_RULE_MESSAGES:BOOL=OFF
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
+      if [ "${{ steps.host.outputs.os }}" == "windows" ]; then
+        opts=(
+          ${opts[@]}
+          -G "MinGW Makefiles"
+        )
+      fi
       cmake ${opts[@]} -S. -B$obj
       cmake --build $obj
 
@@ -60,9 +68,8 @@ runs:
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
 
-      # Apparently forcing the generic
-      [ $(uname -m) == "aarch64*" ] && exit 0
-      [ $(uname -m) == "arm*" ] && exit 0
+      [ "${{ steps.host.outputs.processor }}" == "arm" ] && exit 0
+
       if [[ $(uname) == "Darwin" ]]; then
         system_name=Darwin
         processor=ARM

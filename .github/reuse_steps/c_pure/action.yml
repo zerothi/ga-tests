@@ -10,6 +10,8 @@ runs:
   using: "composite"
   steps:
 
+  - id: host
+    uses: ./.github/reuse_steps/print_host
   - uses: ./.github/reuse_steps/print_compiler
 
   - name: Intrinsic build
@@ -61,8 +63,8 @@ runs:
       )
 
       # Apparently forcing the generic
-      [ $(uname -m) == "aarch64*" ] && exit 0
-      [ $(uname -m) == "arm*" ] && exit 0
+      [ "${{ steps.host.outputs.processor }}" == "arm" ] && exit 0
+
       if [[ $(uname) == "Darwin" ]]; then
         system_name=Darwin
         processor=ARM
