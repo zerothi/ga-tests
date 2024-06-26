@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "pure_lib.h"
+
 void initialize(const int N, float *M, const float val) {
    for (int i = 0 ; i < N ; i++ ) {
       M[i] = val;

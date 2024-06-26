@@ -36,7 +36,7 @@ runs:
       if [ "${{ steps.host.outputs.os }}" == "windows" ]; then
         opts=(
           ${opts[@]}
-          -G "MinGW Makefiles"
+          '-G "MinGW Makefiles"'
         )
       fi
       cmake ${opts[@]} -S. -B$obj
