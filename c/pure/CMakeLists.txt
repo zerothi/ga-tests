@@ -73,19 +73,23 @@ target_link_libraries(${PROJECT_NAME}.pure
   INTERFACE
   $<$<BOOL:${PURE_WITH_BLAS}>:BLAS::BLAS>
   )
+target_include_directories(${PROJECT_NAME}.pure
+  PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  )
 
 # Add executables
 add_executable(${PROJECT_NAME}.pure.x
   pure.c
   )
-target_link_libraries(${PROJECT_NAME}.pure.x
-  PRIVATE
-  ${PROJECT_NAME}.pure
-  )
-
 set_target_properties(${PROJECT_NAME}.pure.x
   PROPERTIES
   OUTPUT_NAME pure.x
+  )
+
+target_link_libraries(${PROJECT_NAME}.pure.x
+  PRIVATE
+  ${PROJECT_NAME}.pure
   )
 
 

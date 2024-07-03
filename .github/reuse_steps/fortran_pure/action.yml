@@ -34,9 +34,8 @@ runs:
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
       if [ "${{ steps.host.outputs.os }}" == "windows" ]; then
-        opts=(
-          ${opts[@]}
-          '-G "MinGW Makefiles"'
+        opts+=(
+          "-G \"MinGW Makefiles\""
         )
       fi
       echo "CMake invocation:"
