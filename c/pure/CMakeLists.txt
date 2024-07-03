@@ -74,7 +74,7 @@ target_link_libraries(${PROJECT_NAME}.pure
   $<$<BOOL:${PURE_WITH_BLAS}>:BLAS::BLAS>
   )
 target_include_directories(${PROJECT_NAME}.pure
-  PUBLIC
+  INTERFACE
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
 
