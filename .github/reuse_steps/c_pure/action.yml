@@ -40,7 +40,13 @@ runs:
 
       # And test
       cd $obj
-      ./pure.x
+      if [ -e ./pure.x ]; then
+        ./pure.x
+      elif [ -e ./pure.x.exe ]; then
+        ./pure.x.exe
+      else
+        echo "Unknown file extension..."
+      fi
 
   # Inspired by:
   # https://github.com/vpetrigo/arm-cmake-toolchains/blob/master/arm-gcc-toolchain.cmake
