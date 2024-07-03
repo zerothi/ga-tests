@@ -3,7 +3,7 @@ name: C compiler info
 runs:
   using: "composite"
   steps:
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       # unset options -e
       set +e
@@ -23,12 +23,12 @@ runs:
         fi
       done
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       echo CC=$CC
       echo CFLAGS=$CFLAGS
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       # unset options -e
       set +e

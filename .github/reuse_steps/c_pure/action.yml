@@ -15,7 +15,7 @@ runs:
   - uses: ./.github/reuse_steps/print_compiler
 
   - name: Intrinsic build
-    shell: bash
+    shell: bash -el {0}
     run: |
       cd c/pure
       obj=obj_host
@@ -51,7 +51,7 @@ runs:
   # Inspired by:
   # https://github.com/vpetrigo/arm-cmake-toolchains/blob/master/arm-gcc-toolchain.cmake
   - name: Crosscompile for arm64
-    shell: bash
+    shell: bash -el {0}
     run: |
       cd c/pure
       obj=obj_arm64

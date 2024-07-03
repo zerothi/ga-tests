@@ -4,7 +4,7 @@ description: Simple showcasing variables
 runs:
   using: "composite"
   steps:
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       set +e
       names=(
@@ -23,12 +23,12 @@ runs:
         fi
       done
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       echo FC=$FC
       echo FFLAGS=$FFLAGS
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       # unset options -e
       set +e

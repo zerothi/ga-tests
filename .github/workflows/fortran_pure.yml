@@ -5,13 +5,26 @@ on:
     branches: [ "main" ]
 
 jobs:
+  define-matrix:
+    runs-on: ubuntu-latest
+
+    outputs:
+      os: ${{ steps.os.outputs.os }}
+
+    steps:
+      - name: Define OS
+        id: os
+        run: |
+          echo 'os=["ubuntu-latest", "macos-12", "macos-latest", "windows-latest"]' >> "$GITHUB_OUTPUT"
+
   intrinsic_fortran_linux:
     name: intrinsic
+    needs: define-matrix
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-12, macos-latest, windows-latest]
+        os: ${{ fromJSON(needs.define-matrix.outputs.os) }}
         exclude:
           # Neither of these has gfortran by default
           - os: macos-12
@@ -27,11 +40,12 @@ jobs:
 
   setup_fortran:
     name: setup_fortran
+    needs: define-matrix
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-12, macos-latest, windows-latest]
+        os: ${{ fromJSON(needs.define-matrix.outputs.os) }}
         toolchain:
           - {compiler: gcc, version: 11}
 

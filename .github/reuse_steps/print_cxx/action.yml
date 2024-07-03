@@ -3,7 +3,7 @@ name: C++ compiler info
 runs:
   using: "composite"
   steps:
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       # unset options -e
       set +e
@@ -14,12 +14,12 @@ runs:
       echo nvc++   = $(which nvc++)
       echo cxx     = $(which cxx)
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       echo CXX=$CXX
       echo CXXFLAGS=$CXXFLAGS
 
-  - shell: bash
+  - shell: bash -el {0}
     run: |
       # unset options -e
       set +e

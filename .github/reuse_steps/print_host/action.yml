@@ -13,7 +13,7 @@ runs:
   using: "composite"
   steps:
   - id: detect
-    shell: bash
+    shell: bash -el {0}
     run: |
       # unset options -e
       set +e
