@@ -23,6 +23,8 @@ project(pure
 include(GNUInstallDirs)
 include(CMakePrintHelpers)
 
+include(${PROJECT_SOURCE_DIR}/../../config/PrintInfo.cmake)
+
 
 # Define options for this project
 option(BUILD_SHARED_LIBS "Build using shared libraries" FALSE)
@@ -38,18 +40,6 @@ endif()
 
 option(PURE_WITH_BLAS "Enable code with BLAS calls" FALSE)
 option(PURE_INSTALL "Enable install calls" ${PROJECT_IS_TOP_LEVEL})
-
-
-# Print options
-cmake_print_variables(PROJECT_NAME)
-cmake_print_variables(BUILD_SHARED_LIBS)
-cmake_print_variables(PURE_WITH_BLAS)
-cmake_print_variables(PURE_INSTALL)
-cmake_print_variables(CMAKE_CROSSCOMPILING)
-cmake_print_variables(CMAKE_HOST_SYSTEM_NAME)
-cmake_print_variables(CMAKE_SYSTEM_NAME)
-cmake_print_variables(CMAKE_HOST_SYSTEM_PROCESSOR)
-cmake_print_variables(CMAKE_SYSTEM_PROCESSOR)
 
 
 if( PURE_WITH_BLAS )

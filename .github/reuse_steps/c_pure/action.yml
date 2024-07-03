@@ -33,6 +33,12 @@ runs:
         -DCMAKE_RULE_MESSAGES:BOOL=OFF
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
       )
+      if [ "${{ steps.host.outputs.os }}" == "windows" ]; then
+        opts+=(
+          -G "MinGW Makefiles"
+        )
+      fi
+
       echo "CMake invocation:"
       echo " cmake ${opts[@]} -S. B$obj"
       cmake "${opts[@]}" -S. -B$obj

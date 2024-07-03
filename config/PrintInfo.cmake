@@ -1,0 +1,19 @@
+
+# Print options
+cmake_print_variables(PROJECT_NAME)
+cmake_print_variables(BUILD_SHARED_LIBS)
+cmake_print_variables(PURE_WITH_BLAS)
+cmake_print_variables(PURE_INSTALL)
+cmake_print_variables(CMAKE_CROSSCOMPILING)
+cmake_print_variables(CMAKE_HOST_SYSTEM_NAME)
+cmake_print_variables(CMAKE_SYSTEM_NAME)
+cmake_print_variables(CMAKE_HOST_SYSTEM_PROCESSOR)
+cmake_print_variables(CMAKE_SYSTEM_PROCESSOR)
+
+# Compiler information
+cmake_print_variables(CMAKE_C_COMPILER)
+cmake_print_variables(CMAKE_C_FLAGS)
+cmake_print_variables(CMAKE_CXX_COMPILER)
+cmake_print_variables(CMAKE_CXX_FLAGS)
+cmake_print_variables(CMAKE_Fortran_COMPILER)
+cmake_print_variables(CMAKE_Fortran_FLAGS)

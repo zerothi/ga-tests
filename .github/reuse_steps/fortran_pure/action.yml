@@ -38,6 +38,7 @@ runs:
           -G "MinGW Makefiles"
         )
       fi
+
       echo "CMake invocation:"
       echo " cmake ${opts[@]} -S. B$obj"
       cmake "${opts[@]}" -S. -B$obj
