@@ -48,7 +48,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: conda-incubator/setup-miniconda
+      - uses: conda-incubator/setup-miniconda@v3
 
       - name: install gcc
         shell: bash
