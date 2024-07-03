@@ -35,7 +35,7 @@ runs:
       )
       if [ "${{ steps.host.outputs.os }}" == "windows" ]; then
         opts+=(
-          "-G \"MinGW Makefiles\""
+          -G "MinGW Makefiles"
         )
       fi
       echo "CMake invocation:"
