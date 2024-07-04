@@ -52,12 +52,27 @@ jobs:
         with:
           channels: conda-forge,defaults
 
-      - name: install gcc
+      - name: install c-compiler
         shell: bash -el {0}
         run: |
           conda info
           conda list
-          conda install gcc
+
+          # unset options -e
+          set +e
+
+          names=(
+            gcc
+            clang
+          )
+
+          for package in ${names[@]} ; do
+            conda search $package
+            if [ $? -eq 0 ]; then
+              conda install $package
+              break
+            fi
+          done
 
           conda info
           conda list

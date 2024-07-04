@@ -13,6 +13,8 @@ runs:
   - id: host
     uses: ./.github/reuse_steps/print_host
   - uses: ./.github/reuse_steps/print_compiler
+  - id: cc
+    uses: ./.github/reuse_steps/print_c
 
   - name: Intrinsic build
     shell: bash -el {0}
@@ -23,8 +25,8 @@ runs:
       # Just to be sure it is the same as prior steps
       echo CC=$CC
       if [ -z "$CC" ]; then
-        echo "Ensuring CC=gcc..."
-        export CC=gcc
+        echo "Ensuring CC=${{ steps.cc.outputs.cc }}"
+        export CC=${{ steps.cc.outputs.cc }}
       fi
 
       opts=(

@@ -13,6 +13,8 @@ runs:
   - id: host
     uses: ./.github/reuse_steps/print_host
   - uses: ./.github/reuse_steps/print_compiler
+  - id: fc
+    uses: ./.github/reuse_steps/print_fortran
 
   - name: Intrinsic build
     shell: bash -el {0}
@@ -23,8 +25,8 @@ runs:
       # Just to be sure it is the same as prior steps
       echo FC=$FC
       if [ -z "$FC" ]; then
-        echo "Ensuring FC=gfortran..."
-        export FC=gfortran
+        echo "Ensuring FC=${{ steps.fc.outputs.fc }}"
+        export FC=${{ steps.fc.outputs.fc }}
       fi
 
       opts=(

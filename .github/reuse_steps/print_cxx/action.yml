@@ -1,5 +1,10 @@
 name: C++ compiler info
 
+outputs:
+  cxx:
+    description: "The default compiler that is available"
+    value: ${{ steps.detect.outputs.cxx }}
+
 runs:
   using: "composite"
   steps:
@@ -7,12 +12,27 @@ runs:
     run: |
       # unset options -e
       set +e
-      echo g++     = $(which g++)
-      echo clang++ = $(which clang++)
-      echo icpc    = $(which icpc)
-      echo icpx    = $(which icpx)
-      echo nvc++   = $(which nvc++)
-      echo cxx     = $(which cxx)
+      # Set to none, then we will create it...
+      cxx=""
+      names=(
+        g++
+        clang++
+        icpx
+        nvc++
+        icpc
+        cxx
+      )
+      for v in ${names[@]} ; do
+        exe=$(which $v)
+        printf '\n\n%-10s : %s\n' $v $exe
+        if [ -e "$exe" ]; then
+          echo "  --version: $($exe --version)"
+          if [ -z "$cxx" ]; then
+            cxx=$exe
+          fi
+        fi
+      done
+      echo "cxx=$cxx" >> $GITHUB_OUTPUT
 
   - shell: bash -el {0}
     run: |

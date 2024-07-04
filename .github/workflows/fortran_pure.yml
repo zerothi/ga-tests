@@ -62,3 +62,49 @@ jobs:
 
       - uses: ./.github/reuse_steps/print_host
       - uses: ./.github/reuse_steps/fortran_pure
+
+  conda_default_fortran_linux:
+    name: conda default
+    runs-on: ${{ matrix.os }}
+    needs: define-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{ fromJSON(needs.define-matrix.outputs.os) }}
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          channels: conda-forge,defaults
+
+      - name: install fortran-compiler
+        shell: bash -el {0}
+        run: |
+          conda info
+          conda list
+
+          # unset options -e
+          set +e
+
+          names=(
+            gfortran
+            flang
+          )
+
+          for package in ${names[@]} ; do
+            conda search $package
+            if [ $? -eq 0 ]; then
+              conda install $package
+              break
+            fi
+          done
+
+          conda info
+          conda list
+
+      - uses: ./.github/reuse_steps/print_host
+      - uses: ./.github/reuse_steps/fortran_pure
