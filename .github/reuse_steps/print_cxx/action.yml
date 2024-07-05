@@ -23,16 +23,16 @@ runs:
         cxx
       )
       for v in ${names[@]} ; do
-        exe=$(which $v)
-        printf '\n\n%-10s : %s\n' $v $exe
+        exe=$(which $v 2>/dev/null)
+        printf '\n\n%-10s : %s\n' "$v" "$exe"
         if [ -e "$exe" ]; then
           echo "  --version: $($exe --version)"
           if [ -z "$cxx" ]; then
-            cxx=$exe
+            cxx="$exe"
           fi
         fi
       done
-      echo "cxx=$cxx" >> $GITHUB_OUTPUT
+      echo "cxx='$cxx'" >> $GITHUB_OUTPUT
 
   - shell: bash -el {0}
     run: |

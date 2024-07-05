@@ -35,3 +35,7 @@ runs:
       else
         echo "processor=x86_64" >> $GITHUB_OUTPUT
       fi
+
+      # Show the path
+      echo "Showing the PATH="
+      echo "$PATH"

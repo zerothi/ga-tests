@@ -63,6 +63,16 @@ jobs:
       - uses: ./.github/reuse_steps/print_host
       - uses: ./.github/reuse_steps/fortran_pure
 
+      - if: matrix.os == 'macos*'
+        uses: ./.github/reuse_steps/fortran_pure
+        with:
+          osx_sdk: 12.0
+
+      - if: matrix.os == 'macos*'
+        uses: ./.github/reuse_steps/fortran_pure
+        with:
+          osx_sdk: 13.0
+
   conda_default_fortran_linux:
     name: conda default
     runs-on: ${{ matrix.os }}

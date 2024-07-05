@@ -21,6 +21,7 @@ runs:
     run: |
       cd c/pure
       obj=obj_host
+      rm -rf $obj
 
       # Just to be sure it is the same as prior steps
       echo CC=$CC
@@ -63,6 +64,7 @@ runs:
     run: |
       cd c/pure
       obj=obj_arm64
+      rm -rf $obj
 
       # Just to be sure it is the same as prior steps
       echo CC=$CC

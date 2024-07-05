@@ -5,6 +5,10 @@ inputs:
     description: 'Also build for arm64, if not native?'
     required: false
     default: 'false'
+  osx_sdk:  # id of input
+    description: 'Which SDK version for the OSX build'
+    required: false
+    default: ''
 
 runs:
   using: "composite"
@@ -21,12 +25,18 @@ runs:
     run: |
       cd fortran/pure
       obj=obj_host
+      rm -rf $obj
 
       # Just to be sure it is the same as prior steps
       echo FC=$FC
       if [ -z "$FC" ]; then
         echo "Ensuring FC=${{ steps.fc.outputs.fc }}"
         export FC=${{ steps.fc.outputs.fc }}
+      fi
+
+      if [ -z "${{ inputs.osx_sdk }}" ]; then
+        echo "Specifying deployment target to ${{ inputs.osx_sdk }}"
+        export MACOSX_DEPLOYMENT_TARGET="${{ inputs.osx_sdk }}"
       fi
 
       opts=(
@@ -63,6 +73,7 @@ runs:
     run: |
       cd fortran/pure
       obj=obj_arm64
+      rm -rf $obj
 
       # Just to be sure it is the same as prior steps
       echo FC=$FC
