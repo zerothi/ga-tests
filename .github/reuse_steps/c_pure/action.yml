@@ -30,6 +30,11 @@ runs:
         export CC=${{ steps.cc.outputs.cc }}
       fi
 
+      if [ -n "${{ inputs.osx_sdk }}" ]; then
+        echo "Specifying deployment target to ${{ inputs.osx_sdk }}"
+        export MACOSX_DEPLOYMENT_TARGET="${{ inputs.osx_sdk }}"
+      fi
+
       opts=(
         --log-level=debug
         --log-context
@@ -50,11 +55,18 @@ runs:
       # And test
       cd $obj
       if [ -e ./pure.x ]; then
-        ./pure.x
+        exe=pure.x
       elif [ -e ./pure.x.exe ]; then
-        ./pure.x.exe
+        exe=pure.x.exe
       else
         echo "Unknown file extension..."
+        exit 1
+      fi
+      ./$exe
+
+      if [ "${{ steps.host.outputs.os }}" == "mac" ]; then
+        # Check with otool how it looks like
+        otool -l ./$exe
       fi
 
   # Inspired by:
@@ -69,8 +81,8 @@ runs:
       # Just to be sure it is the same as prior steps
       echo CC=$CC
       if [ -z "$CC" ]; then
-        echo "Ensuring CC=gcc..."
-        export CC=gcc
+        echo "Ensuring CC=${{ steps.cc.outputs.cc }}"
+        export CC=${{ steps.cc.outputs.cc }}
       fi
 
       opts=(

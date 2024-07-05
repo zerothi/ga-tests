@@ -21,7 +21,7 @@ runs:
       env
 
       if [[ $(uname) == "Darwin" ]]; then
-        echo "os=macos" >> $GITHUB_OUTPUT
+        echo "os=mac" >> $GITHUB_OUTPUT
       elif [[ $(uname) == "Linux" ]]; then
         echo "os=linux" >> $GITHUB_OUTPUT
       else
